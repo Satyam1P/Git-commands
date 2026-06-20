@@ -1,3 +1,14 @@
 git remote set-url origin https://github.com/Satyam1P/Coding-Notebook.git
 
 ssh-keygen -t ed25519 -C "your_email@example.com"
+
+Remote URL still HTTPS
+
+Check your repo remote:
+
+Code
+git remote -v
+If it shows https://github.com/..., change it to SSH:
+
+Code
+git remote set-url origin git@github.com:Satyam1P/Coding-Notebook.git
