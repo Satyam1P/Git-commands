@@ -12,3 +12,58 @@ If it shows https://github.com/..., change it to SSH:
 
 Code
 git remote set-url origin git@github.com:Satyam1P/Coding-Notebook.git
+
+
+-----------------------------------------------------------------------------------
+
+If you want to use three or more accounts on the same computer, the easiest and cleanest way to do it is using HTTPS with the username in the URL.
+
+Here is how you do it for any new account:
+
+Method 1: The Easiest Way (Using HTTPS URLs)
+When you clone a repository or set a remote URL, add the specific username directly into the URL like this:
+
+bash
+
+
+git remote set-url origin https://USERNAME@github.com/USERNAME/REPOSITORY.git
+For example:
+
+Account 1: https://Satyam123Patel@github.com/Satyam123Patel/repo-one.git
+Account 2: https://Satyam1P@github.com/Satyam1P/repo-two.git
+Account 3: https://AnotherAccount@github.com/AnotherAccount/repo-three.git
+Why this works: Windows Credential Manager is smart. When it sees USERNAME@github.com, it saves a separate login/password (or token) for each username. It will never mix them up.
+
+Method 2: The SSH Way (Using an SSH Config File)
+If you prefer SSH for multiple accounts, GitHub doesn't allow you to reuse the same SSH key on different accounts. You must create a new key for each account:
+
+Generate a new key with a unique name (e.g., id_ed25519_third):
+powershell
+
+
+cmd.exe /c "ssh-keygen -t ed25519 -N """" -f C:\Users\Lenovo\.ssh\id_ed25519_third"
+Add that key to your third GitHub account.
+Create or edit a config file at C:\Users\Lenovo\.ssh\config to map each account:
+text
+
+
+# Account 1 (Satyam123Patel)
+Host github.com-main
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+# Account 2 (Satyam1P)
+Host github.com-second
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_second
+# Account 3 (ThirdAccount)
+Host github.com-third
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_third
+Update the repository remote URL to use the custom host alias:
+bash
+
+
+git remote set-url origin git@github.com-third:ThirdAccount/repository.git
