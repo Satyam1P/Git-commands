@@ -67,3 +67,38 @@ bash
 
 
 git remote set-url origin git@github.com-third:ThirdAccount/repository.git
+
+---------------------------------------------------------------------------------------------------------------------------
+
+1. Generated a New SSH Key
+We generated a new, unique SSH key pair (id_ed25519 and id_ed25519.pub) in your computer's C:\Users\Lenovo\.ssh\ folder. This key acts as your computer's secure fingerprint.
+
+2. Created an SSH Config File
+We created a configuration file at C:\Users\Lenovo\.ssh\config and added the following instructions to it:
+
+text
+
+
+Host github.com-second
+    HostName github.com
+    User git
+    IdentityFile C:\Users\Lenovo\.ssh\id_ed25519
+This tells Windows: "Whenever a Git URL uses github.com-second, connect to github.com using the SSH key we just generated."
+
+3. Fixed Windows Security Permissions
+Windows SSH has a security rule that blocks SSH connections if other users on the computer can read your keys/config. I ran Windows commands (icacls) to lock down the permissions of:
+
+C:\Users\Lenovo\.ssh\config
+C:\Users\Lenovo\.ssh\id_ed25519
+This ensured only your Windows user (satyam) can read them, which satisfied the SSH security requirements.
+
+4. Pushed Using the Alias URL
+Since your repository remote URL was set to: git@github.com-second:Satyam1P/Coding-Notebook.git
+
+Git checked your new SSH config file, used your new SSH key, authenticated you successfully as Satyam1P, and pushed the code!
+
+
+Now for new repository only run this only and then add,commit,push
+
+git remote set-url origin git@github.com-second:Satyam1P/YOUR-REPO-NAME.git
+git config --local user.email "satyampatelkatni1999@gmail.com"
